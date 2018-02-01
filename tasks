@@ -1,0 +1,38 @@
+
+add new controller login -  https://github.com/koajs/session
+
+add new view for loginController (username, hash( pass ))
+
+twitter boostrap
+    - header
+        - h1
+
+        верстка
+
+    practice with css
+
+
+
+finish addUser
+
+
+mails
+
+
+------
+
+
+import users from csv
+    file input (client)
+
+    file (NODE)
+
+
+
+
+
+- доверстати красіво
+- доверстати логін сторінку
+- показувати ерор меседжі
+- валідація реквесту login, create user(чи нема такого юзера)
+

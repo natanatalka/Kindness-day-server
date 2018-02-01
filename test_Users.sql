@@ -1,0 +1,5 @@
+INSERT INTO test.Users (id, name, email, isActive, createdAt, updatedAt, receiverId, uniqueId) VALUES (6, 'Inna', 'inna@test.com', 1, null, '2017-12-07 08:53:38', 11, 200);
+INSERT INTO test.Users (id, name, email, isActive, createdAt, updatedAt, receiverId, uniqueId) VALUES (9, 'Korova', 'korova@test.com', 1, null, '2017-12-07 08:53:07', 12, 300);
+INSERT INTO test.Users (id, name, email, isActive, createdAt, updatedAt, receiverId, uniqueId) VALUES (10, 'Eugene', 'eugene@test.com', 1, null, '2017-12-07 08:53:18', 9, 400);
+INSERT INTO test.Users (id, name, email, isActive, createdAt, updatedAt, receiverId, uniqueId) VALUES (11, 'Kolya', 'test@test.com', 1, null, '2017-12-07 08:53:58', 6, 500);
+INSERT INTO test.Users (id, name, email, isActive, createdAt, updatedAt, receiverId, uniqueId) VALUES (12, 'Vadym', 'vadik@test.com', 1, null, '2017-12-07 08:54:02', 10, 600);

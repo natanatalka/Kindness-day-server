@@ -1,0 +1,88 @@
+<html>
+
+<head>
+
+    <title>Users</title>
+    <% include ../partials/head %>
+</head>
+
+<body>
+<header>
+    <% include ../partials/header %>
+</header>
+<div class="modal fade" id="add-user-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel"
+     aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="addusermodal-container">
+            <h1>Create new user</h1><br>
+            <div id="danger-alert" data-backdrop="static"></div>
+            <form onsubmit="return false;">
+                <input type="text" id="new-user-name" name="name" placeholder="Name">
+                <input type="email" id="new-user-email" name="email" placeholder="Email">
+                <button class="btn btn-primary btn-lg" onclick="addUser()">Create</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div class="alert alert-success" id="success-alert" style="display: none"></div>
+<div class="main">
+
+    <table class="table table-striped" >
+        <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Gift receiver</th>
+            <th>Unique Id</th>
+            <th>Status</th>
+        </tr>
+        </thead>
+        <tbody>
+        <% if(users) { %>
+        <% users.forEach(function(user){ %>
+        <tr class="user-<%-user.id%>">
+
+            <td width="5%">
+                <%- user.id %>
+            </td>
+            <td width="15%">
+                <%- user.name %>
+            </td>
+            <td width="20%">
+                <%- user.email %>
+            </td>
+            <td width="15%">
+                <% if(user.receiver) { %> <%- user.receiver.name %> <% } %>
+            </td>
+            <td width="30%">
+                <%- user.uniqueId %>
+            </td>
+            <td width="5%" class="user-status" id="1" style="width:30px;">
+                <div onclick="changeStatus(<%- user.id %>)">
+                    <% if(user.isActive) { %>
+                        Active
+                    <%} else { %>
+                        Inactive
+                    <% } %>
+                </div>
+
+            </td>
+            <td width="10%">
+                <div>
+                    <button type="button" class="btn btn-danger" onclick="deleteRow(<%-user.id%>)">Delete</button>
+                </div>
+            </td>
+        </tr>
+        <% }); %>
+        <% } else { %>
+        < Empty List >
+        <% } %>
+        </tbody>
+    </table>
+</div>
+</body>
+<script>
+</script>
+</html>
+

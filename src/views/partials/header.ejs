@@ -1,0 +1,61 @@
+
+
+<nav class="navbar navbar-inverse">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">Random acts of kindness</a>
+        </div>
+        <ul class="nav navbar-nav">
+            <li><a href="#">users list</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#add-user-modal">add new user</a></li>
+            <li><a href="#" onclick="sendMail()">send mails</a></li>
+            <li><a href="#" onclick="openfileDialog()">upload users from csv</a></li>
+
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+            <li><a href="#" onclick="logout()"><span class="glyphicon glyphicon-log-in"></span> Logout</a></li>
+        </ul>
+    </div>
+</nav>
+<input type="file" id="upload-users" style="display:none;">
+<div class="jumbotron">
+    <div class="container">
+        <h1 class="display-3">Random acts of kindness day</h1>
+        <p>Random Acts of Kindness Day is a day to celebrate and encourage random acts of kindness.
+            <br>"It's just a day to celebrate kindness and the whole pay it forward mentality"</p>
+        <p><a class="btn btn-primary btn-lg" target="_blank" href="https://en.wikipedia.org/wiki/Random_Acts_of_Kindness_Day" role="button">Learn more »</a></p>
+    </div>
+</div>
+
+<script>
+    function openfileDialog() {
+        $("#upload-users").click();
+    }
+
+
+    $('#upload-users').on('change', function (event) {
+        let files = event.target.files;
+        console.log(files);
+        let data = new FormData();
+        $.each(files, function(key, value)
+        {
+            data.append(key, value);
+        });
+        $.ajax(`/upload`, {
+            processData: false,
+            contentType: false,
+            method: 'POST',
+            data: data
+        })
+            .then((response => {
+                $.ajax(`/users`, {
+                    dataType: 'json',
+                    method: 'GET'
+                });
+                location.reload();
+
+            }))
+            .catch(err => console.log(err));
+    });
+
+</script>
