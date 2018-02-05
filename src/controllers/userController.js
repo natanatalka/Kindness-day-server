@@ -11,7 +11,7 @@ class UserController {
 
     async upload(ctx) {
         let {User} = db;
-        let fileInfo = ctx.request.body.files[0];
+        let fileInfo = ctx.request.body.files.file;
         let file = fileInfo.path;
         let users = csvParse.parseFile(file);
         for (let i = 0; i < users.length; i++) {
@@ -19,6 +19,7 @@ class UserController {
                 {
                     name: users[i].name,
                     email: users[i].email,
+                    group: users[i].group || '',
                     uniqueId: uuid()
                 });
         }
@@ -29,11 +30,12 @@ class UserController {
 
     async mail(ctx) {
         let {User} = db;
-        const user = await User.findById( ctx.params.id);
-        sendMail(ctx, user);
-        ctx.ok({
-            message: 'Email was sent to user ' + user.name
-        })
+        const user = await User.findById(ctx.params.id);
+        if(user.isActive){
+            sendMail(ctx, user);
+        }
+        else ctx.send(400, {message: 'User is inactive'})
+
     }
 
     async mails(ctx) {
@@ -69,7 +71,11 @@ class UserController {
 
     async get(ctx) {
         const {User} = db;
-        const user = await User.findById(ctx.params.id);
+        const user = await User.findById(ctx.params.id, {
+            include: [
+                {model: User, as: 'receiver'}
+            ]
+        });
         // console.log(user);
         if (!user) {
             return ctx.notFound(`Can't found user id:${ctx.params.id}`)
@@ -104,7 +110,7 @@ class UserController {
         const user = await User.findById(ctx.params.id);
         await user.update({name: userData.name, email: userData.email, isActive: userData.isActive});
         ctx.ok({
-            message: `user ${user.name} is updated`
+            message: `User ${user.name} is updated`
         })
     }
 

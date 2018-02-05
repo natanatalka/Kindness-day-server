@@ -2,7 +2,8 @@ const passwordHash = require('password-hash');
 const db = require('../../models/index');
 const Sequelize = require('sequelize');
 const index = require('../index.js');
-// const jws =
+const jws = require('jws');
+const config = require('../../config/config');
 
 
 class LoginController {
@@ -24,35 +25,36 @@ class LoginController {
     }
 
     async logout(ctx) {
-        ctx.session = null;
-        return await ctx.render('login/index', {
-            error: ''
-        });
     }
 
     async login(ctx) {
         const errorMessage = 'Incorrect username of password';
         let {Admin} = db;
         const body = ctx.request.body;
-        const user = await Admin.findOne({where: {username: body.username}});
-        if (user) {
-            if (passwordHash.verify(body.password, user.password)) {
-                ctx.session.login = true;
-                ctx.session.userId = user.id;
-                ctx.ok({
-                    tokem: '',
-                    message: 'User is logged in'
+        const admin = await Admin.findOne({where: {username: body.username}});
+        if (admin) {
+            if (passwordHash.verify(body.password, admin.password)) {
+                const token = jws.sign({
+                    header: { alg: 'HS256' },
+                    payload: {user: admin.username},
+                    secret: config.secret
                 });
-                ctx.redirect('/users');
+                ctx.ok({
+                    success: true,
+                    message: 'User is successfully logged in!',
+                    token: token
+                });
             }
             else {
                 ctx.send(401,{
+                    success: false,
                     message: errorMessage
                 });
             }
         }
         else {
             ctx.send(401, {
+                success: false,
                 message: errorMessage
             });
         }

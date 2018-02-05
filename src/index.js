@@ -10,11 +10,14 @@ const session = require('koa-session');
 const koaBody = require('koa-body');
 const config = require('../config/config');
 const router = require('./routes/routes');
+// const cors = require('cors');
 
+app.use(cors({origin: '*',
+    expose: ['Authorization'],
+    headers: ['Content-Type', 'Authorization']}));
 app.keys = ['drunk_nata'];
 
 app.use(koaBody({ multipart: true }));
-app.use(cors());
 
 const transport = nodemailer.createTransport( {
     service: config.service,
@@ -23,7 +26,6 @@ const transport = nodemailer.createTransport( {
         pass: config.mailPassword
     }
 });
-
 app.use(session(app));
 app.context.mailTransport = transport;
 app.use(bodyParser());

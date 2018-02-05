@@ -8,7 +8,6 @@ const loginController = new LoginController();
 const csvParse = require('../services/parseCSV');
 const userValidation = require('../middleware/validation/userValidation');
 
-
 route.get('/logout', async (ctx, next) => {
     await loginController.logout(ctx);
     ctx.redirect('/login');
@@ -27,9 +26,9 @@ route.get('/admins', async (ctx) => {
    await loginController.index(ctx);
 });
 
-route.get(['/login', '/'], async (ctx) => {
-    await loginController.index(ctx);
-});
+// route.get(['/login', '/'], async (ctx) => {
+//     await loginController.index(ctx);
+// });
 
 route.post('/login', async (ctx) => {
     await loginController.login(ctx);
@@ -66,7 +65,7 @@ route.get('/users/:id/status', auth, async (ctx) => {
     await userController.changeStatus(ctx)
 });
 
-route.post('/users', userValidation, async (ctx) => {
+route.post('/users', auth, userValidation, async (ctx) => {
     await userController.create(ctx)
 });
 

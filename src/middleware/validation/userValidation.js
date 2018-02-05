@@ -30,6 +30,15 @@ module.exports = async(ctx, next) => {
         }
     }
 
+    if(ctx.method==='PUT') {
+    let user = await User.findOne({where: {id: ctx.params.id}});
+    if(email != user.email) {
+        if (emails.includes(email)) {
+            errorsArray.push(errors.emailAlreadyExists)
+        }
+    }
+    }
+
     if (errorsArray.length != 0)
         ctx.send(422, errorsArray.map(msg => msg.message));
     else await next();

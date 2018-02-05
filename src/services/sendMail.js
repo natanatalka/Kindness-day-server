@@ -5,6 +5,7 @@ var cheerio = require('cheerio');
 const path = require('path');
 
 let sendMail = (ctx, user) => {
+    let success;
     var appDir = path.dirname(require.main.filename);
     fs.readFile(appDir + '/views/mails/register.html', 'utf8', function(err, html){
         if(err){
@@ -12,7 +13,7 @@ let sendMail = (ctx, user) => {
         }
 
         $ = cheerio.load(html.toString());
-        $('#link').attr('href', 'http://localhost:5001/receiver/' + user.uniqueId);
+        $('#link').attr('href', 'http://192.168.100.5:5001/receiver/' + user.uniqueId);
 
         let data = {
             to: user.email,
@@ -21,10 +22,10 @@ let sendMail = (ctx, user) => {
         };
         ctx.mailTransport.sendMail(data, function (error, response) {
             if (response) {
-                ctx.ok();
+                ctx.ok({ message: 'Email was sent to ' + user.name});
             }
             if (error) {
-                return ctx.throw(422, error)
+                // ctx.send(404, {message: 'Error '})
             }
         });
     });
