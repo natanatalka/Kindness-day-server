@@ -44,5 +44,5 @@ app
     .use(router.allowedMethods());
 
 
-console.log(`App started ${config.app_protocol}://${config.app_host}:${config.app_port}`);
-app.listen(config.app_port, config.app_host);
+console.log(`App started at 5001`);
+app.listen(5001);
