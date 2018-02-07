@@ -1,4 +1,4 @@
-require('dotenv').config({path: __dirname +  '/../.env.local'});
+require('dotenv').config({path: __dirname +  '/../.env'});
 
 console.log( __dirname +  '/../.env');
 console.log(process.env.DB_HOST);
@@ -11,7 +11,6 @@ module.exports = {
     "dialect": "mysql",
     "mail":  process.env.EMAIL,
     "mailPassword": process.env.EMAIL_PASS,
-    // "app_port": process.env.APP_PORT,
     "service": "Gmail",
     "secret": "natanatanata"
 };
