@@ -10,11 +10,10 @@ const userValidation = require('../middleware/validation/userValidation');
 
 route.get('/logout', async (ctx, next) => {
     await loginController.logout(ctx);
-    ctx.redirect('/login');
 }, async (ctx) => {
 });
 
-route.post('/upload', async (ctx, next) => {
+route.post('/users/upload', async (ctx, next) => {
 await userController.upload(ctx);
 });
 
@@ -26,16 +25,12 @@ route.get('/admins', async (ctx) => {
    await loginController.index(ctx);
 });
 
-// route.get(['/login', '/'], async (ctx) => {
-//     await loginController.index(ctx);
-// });
-
 route.post('/login', async (ctx) => {
     await loginController.login(ctx);
 });
 
-route.get('/users', auth, async (ctx) => {
-    return await userController.index(ctx);
+route.get('/users', async (ctx) => {
+    await userController.index(ctx);
 });
 
 route.get('/users/mails',  async (ctx) => {
@@ -61,14 +56,17 @@ route.get('/receiver/:uniqueId', async (ctx) => {
     await userController.receiver(ctx);
 } );
 
-route.get('/users/:id/status', auth, async (ctx) => {
-    await userController.changeStatus(ctx)
-});
+route.del('/users/:id/receiver', async (ctx) => {
+    await userController.deleteReceiver(ctx);
+})
+
+// route.get('/users/:id/status', auth, async (ctx) => {
+//     await userController.changeStatus(ctx)
+// });
 
 route.post('/users', auth, userValidation, async (ctx) => {
     await userController.create(ctx)
 });
-
 
 route.put('/users/:id',userValidation, async (ctx) => {
     await userController.update(ctx)

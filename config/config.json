@@ -1,11 +1,11 @@
 {
-    "username": "root",
-    "password": "1111",
-    "database": "test",
-    "host": "127.0.0.1",
-    "dialect": "mysql",
+  "username": "root",
+  "password": "1111",
+  "database": "test",
+  "app_host": "127.0.0.1",
+  "dialect": "mysql",
   "mail": "giftreceivernoreply@gmail.com",
   "mailPassword": "testest123",
-    "service": "Gmail",
+  "service": "Gmail",
   "secret": "natanatanata"
 }

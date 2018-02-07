@@ -10,11 +10,11 @@ const session = require('koa-session');
 const koaBody = require('koa-body');
 const config = require('../config/config');
 const router = require('./routes/routes');
-// const cors = require('cors');
 
 app.use(cors({origin: '*',
     expose: ['Authorization'],
     headers: ['Content-Type', 'Authorization']}));
+
 app.keys = ['drunk_nata'];
 
 app.use(koaBody({ multipart: true }));
@@ -44,5 +44,5 @@ app
     .use(router.allowedMethods());
 
 
-console.log('App started http://localhost:5001');
-app.listen(5001);
+console.log(`App started ${config.app_protocol}://${config.app_host}:${config.app_port}`);
+app.listen(config.app_port, config.app_host);

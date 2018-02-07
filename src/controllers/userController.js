@@ -7,6 +7,7 @@ const index = require('../index.js');
 const csvParse = require('../services/parseCSV');
 const uuid = require('uuid/v4');
 const sendMail = require('../services/sendMail');
+
 class UserController {
 
     async upload(ctx) {
@@ -31,8 +32,9 @@ class UserController {
     async mail(ctx) {
         let {User} = db;
         const user = await User.findById(ctx.params.id);
-        if(user.isActive){
+        if (user.isActive) {
             sendMail(ctx, user);
+            ctx.ok({message: 'Email was sent to user'})
         }
         else ctx.send(400, {message: 'User is inactive'})
 
@@ -40,20 +42,22 @@ class UserController {
 
     async mails(ctx) {
         let {User} = db;
-        const users = await User.findAll({attributes: ['name', 'email', 'uniqueId']});
+        const users = await User.findAll({attributes: ['name', 'email', 'uniqueId', 'isActive']});
 
         function send() {
             while (users.length != 0) {
                 let i = users.length;
                 let user = users.pop();
-                (function (i)
-                    {
-                        setTimeout(() => sendMail(ctx, user), 5000*i);
+                if (user.isActive) {
+                    (function (i) {
+                        setTimeout(() => sendMail(ctx, user), 5000 * i);
                     })(i)
-                }
-
+                } else continue;
             }
-            send();
+        }
+
+        send();
+        ctx.ok({message: 'Email were sent to users'})
     }
 
     async index(ctx) {
@@ -81,7 +85,7 @@ class UserController {
             return ctx.notFound(`Can't found user id:${ctx.params.id}`)
         }
         ctx.ok({
-                data: user.toJSON()
+            data: user.toJSON()
         });
     }
 
@@ -97,9 +101,9 @@ class UserController {
         }).then(user => {
             createdUser = user;
         });
-            ctx.ok({
-                createdUser,
-                message: `User ${user.name} was created`,
+        ctx.ok({
+            createdUser,
+            message: `User ${user.name} was created`,
         });
     }
 
@@ -140,6 +144,21 @@ class UserController {
         });
     }
 
+    async deleteReceiver(ctx) {
+        const {User} = db;
+        const user = await User.findById(ctx.params.id);
+
+        if (!user) {
+            return ctx.notFound(`Can't found user with unique id:${ctx.params.id}`)
+        }
+
+        const result = await user.update({receiverId: null, receiver: null});
+
+        ctx.ok({
+            message: 'Gift receiver was deleted for user ' + user.name
+        });
+    }
+
 
     async receiver(ctx) {
         const {User} = db;
@@ -147,7 +166,7 @@ class UserController {
         //get user by uniqueId
         const user = await User.findOne({where: {uniqueId: ctx.params.uniqueId}});
 
-        if(!user) {
+        if (!user) {
             ctx.throw(404, 'User not found')
         }
 
@@ -164,7 +183,7 @@ class UserController {
         //get only ids of available users
         const usersIds = availableIds.map(u => u.id);
 
-        if(usersIds.length===0) {
+        if (usersIds.length === 0) {
             ctx.throw(400, 'No available users')
         }
 
@@ -177,7 +196,7 @@ class UserController {
 
         const receiver = await User.findOne({where: {id: receiverId}});
 
-        if(!receiver) {
+        if (!receiver) {
             ctx.throw(404, 'There is no user with such receiver id')
         }
         return await ctx.render('receiver/index', {receiver: receiver.name});
