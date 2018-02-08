@@ -1,4 +1,4 @@
-require('dotenv').config({path: __dirname +  '/../.env'});
+require('dotenv').config({path: __dirname +  '/../.env.local'});
 
 console.log( __dirname +  '/../.env');
 console.log(process.env.DB_HOST);
