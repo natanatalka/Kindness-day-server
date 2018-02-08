@@ -12,6 +12,9 @@ module.exports = (sequelize, Sequelize) => {
         password: {
             type: Sequelize.TEXT
         }
+    }, {
+        timestamp:
+            false
     });
 
     return Admin;
