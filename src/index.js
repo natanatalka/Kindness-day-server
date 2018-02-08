@@ -32,7 +32,7 @@ app.use(bodyParser());
 
 app.use(respond());
 app.use(serve(__dirname + '/../public'));
-
+config
 app.use(views(__dirname + '/views', {
     map: {
         html: 'ejs'
@@ -44,5 +44,5 @@ app
     .use(router.allowedMethods());
 
 
-console.log(`App started at 5001`);
-app.listen(5001);
+console.log(`App started at 8006`);
+app.listen(8006);

@@ -5,9 +5,9 @@ const passwordHash = require('password-hash');
 module.exports = {
   up: (queryInterface, Sequelize) => {
 
-    let pass = passwordHash.generate('P@ssw0rd');
+    let pass = passwordHash.generate('111');
       return queryInterface.bulkInsert('Admins', [{
-          username: 'natalia',
+          username: 'nata',
           password: pass
       }], {});
   },
