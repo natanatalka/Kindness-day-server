@@ -12,9 +12,6 @@ module.exports = (sequelize, Sequelize) => {
         email: {
             type: Sequelize.TEXT
         },
-        group: {
-            type: Sequelize.TEXT
-        },
         isActive: {
             type: Sequelize.BOOLEAN
         },
