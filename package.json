@@ -6,9 +6,9 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node src/index.js",
-    "db:create": "./node_modules/.bin/sequelize db:create --config \"../../config/config.js\"",
-    "db:migrate": "./node_modules/.bin/sequelize db:migrate --config \"../../config/config.js\"",
-    "db:seed": "./node_modules/.bin/sequelize db:seed --config \"../../config/config.js\""
+    "db:create": "./node_modules/.bin/sequelize db:create --config \"./config/config.js\"",
+    "db:migrate": "./node_modules/.bin/sequelize db:migrate --config \"./config/config.js\"",
+    "db:seed": "./node_modules/.bin/sequelize db:seed --config \"./config/config.js\""
   },
   "author": "",
   "license": "ISC",
