@@ -20,6 +20,14 @@ module.exports = {
                 defaultValue: true,
                 allowNull: false
             },
+            receiverId: {
+                type: Sequelize.INTEGER,
+                allowNull: true
+            },
+            uniqueId: {
+                type: Sequelize.STRING,
+                allowNull: false
+            },
             createdAt: {
                 type: Sequelize.DATE
             },
