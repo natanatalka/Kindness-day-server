@@ -1,7 +1,7 @@
 const UserController = require('../controllers/userController');
 const LoginController = require('../controllers/loginController');
 const Router = require('koa-router');
-const route = new Router();
+const route = new Router({prefix: '/api'});
 const auth = require('../middleware/auth');
 const userController = new UserController();
 const loginController = new LoginController();
