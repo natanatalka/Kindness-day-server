@@ -7,6 +7,8 @@ const index = require('../index.js');
 const csvParse = require('../services/parseCSV');
 const uuid = require('uuid/v4');
 const sendMail = require('../services/sendMail');
+const getPhotoPath = require('../services/getPhotoPath');
+const path = require('path');
 
 class UserController {
 
@@ -162,7 +164,7 @@ class UserController {
 
     async receiver(ctx) {
         const {User} = db;
-
+        let receiver;
         //get user by uniqueId
         const user = await User.findOne({where: {uniqueId: ctx.params.uniqueId}});
 
@@ -170,36 +172,43 @@ class UserController {
             ctx.throw(404, 'User not found')
         }
 
-        //get all users with not null receiverId
-        const usersWithNotNullReceiverIds = await User.findAll({where: Sequelize.and({receiverId: {[Op.ne]: null}})});
-
-        //get only receiverId from all users with not null receiverId
-        const receiverIdsArray = usersWithNotNullReceiverIds.map(u => u.receiverId);
-
-        //get all users that are available to be set as gift receiver,
-        // i.e. that are not already a gift receiver and excluding current user
-        const availableIds = await User.findAll({where: Sequelize.and({id: {[Op.notIn]: receiverIdsArray}}, {id: {[Op.ne]: user.id}}, {isActive: '1'})});
-
-        //get only ids of available users
-        const usersIds = availableIds.map(u => u.id);
-
-        if (usersIds.length === 0) {
-            ctx.throw(400, 'No available users')
+        if(user.receiverId) {
+            receiver = await User.findOne({where: {id: user.receiverId}});
         }
+        else {
+            const usersWithNotNullReceiverIds = await User.findAll({where: Sequelize.and({receiverId: {[Op.ne]: null}})});
 
-        //if user doesn't have a receiver yet then set a random user from available users
-        let receiverId = user.receiverId;
-        if (!user.receiverId) {
-            receiverId = usersIds[Math.floor(Math.random() * usersIds.length)];
-            await user.update({receiverId});
+            //get only receiverId from all users with not null receiverId
+            const receiverIdsArray = usersWithNotNullReceiverIds.map(u => u.receiverId);
+
+            //get all users that are available to be set as gift receiver,
+            // i.e. that are not already a gift receiver and excluding current user
+            const availableIds = await User.findAll({where: Sequelize.and({id: {[Op.notIn]: receiverIdsArray}}, {id: {[Op.ne]: user.id}}, {isActive: '1'})});
+
+            //get only ids of available users
+            const usersIds = availableIds.map(u => u.id);
+
+            if (usersIds.length === 0) {
+                ctx.throw(400, 'No available users')
+            }
+
+            //if user doesn't have a receiver yet then set a random user from available users
+            let receiverId = user.receiverId;
+            if (!user.receiverId) {
+                receiverId = usersIds[Math.floor(Math.random() * usersIds.length)];
+                await user.update({receiverId});
+            }
+
+            receiver = await User.findOne({where: {id: receiverId}});
         }
-
-        const receiver = await User.findOne({where: {id: receiverId}});
+        // const photoPath = path.dirname(require.main.filename);
+        console.log(getPhotoPath(receiver));
 
         if (!receiver) {
             ctx.throw(404, 'There is no user with such receiver id')
         }
-        return await ctx.render('receiver/index', {receiver: receiver.name});
+
+        return await ctx.render('receiver/index', {receiver: receiver.name, picture_path: getPhotoPath(receiver)});
 
     }
 }

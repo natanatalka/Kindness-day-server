@@ -32,7 +32,6 @@ app.use(bodyParser());
 
 app.use(respond());
 app.use(serve(__dirname + '/../public'));
-config
 app.use(views(__dirname + '/views', {
     map: {
         html: 'ejs'
