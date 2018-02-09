@@ -39,12 +39,12 @@
 }
 
 input:disabled,
-input[disabled]{
+input[disabled] {
     cursor: not-allowed;
     pointer-events: none;
     color: #c0c0c0;
     background-color: #ffffff;
-     color: #c0c0c0;
+    color: #c0c0c0;
 
 }
 
@@ -57,16 +57,17 @@ input[disabled]{
 }
 
 #users {
-    width:60%;
+    width: 60%;
     margin-left: 40%;
 }
 
 .user-status {
     cursor: pointer;
 }
+
 .alert {
     top: 11%;
-    opacity:0.8;
+    opacity: 0.8;
     z-index: 999999;
 }
 
@@ -111,6 +112,7 @@ span.psw {
         display: block;
         float: none;
     }
+
     .cancelbtn {
         width: 100%;
     }
@@ -120,15 +122,14 @@ span.psw {
     color: red;
 }
 
-
 .image-cropper {
-    width: 473px;
-    height: 473px;
+    width: 476px;
+    height: 476px;
     position: relative;
     overflow: hidden;
     border-radius: 50%;
-    margin-top: -849px;
-    margin-left: 682px;
+    margin-top: -855px;
+    margin-left: 680px;
     z-index: 300;
 }
 
@@ -141,11 +142,32 @@ img {
 }
 
 #main-text {
-    margin-left: 350px;
-    margin-top:13px;
-    font-size: 30pt;
+    margin-left: 450px;
+    margin-top: 13px;
+    font-size: 25pt;
     font-family: 'Montserrat';
     color: #3C3352;
     position: absolute;
     z-index: 1;
+}
+
+#small-text {
+    font-size: 20pt;
+    font-family: 'Montserrat';
+    color: #3C3352;
+    margin-top: -440px;
+    margin-left: 280px;
+    position: relative;
+    z-index: 4;
+    width: 400px;
+    height: 100px;
+}
+
+#small-image {
+    margin-top: -110px;
+    margin-left: 200px;
+    position: relative;
+    z-index: 3;
+    width: 550px;
+    height: 140px;
 }
