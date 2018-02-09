@@ -16,7 +16,7 @@ let sendMail = (ctx, user) => {
         }
 
         $ = cheerio.load(html.toString());
-        $('#link').attr('href', `${url}/api/receiver/` + user.uniqueId);
+        $('#link').attr('href', `http://kindness.testing.softjourn.if.ua/api/receiver/` + user.uniqueId);
 
         let data = {
             to: user.email,
