@@ -2,19 +2,43 @@
 
 <head>
     <title>Receiver</title>
-
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:100" rel="stylesheet">
     <% include ../partials/head %>
 </head>
-
 <body>
-<br>
-<br>
-<div class="container-fluid bg-1 text-center">
-    <h3>Who Am I?</h3>
-    <h3>Your secret gift receiver is
-        <%-receiver%>
-    </h3>
+<div style="position: relative; display: inline; z-index: 0;">
+    <div style="position: relative; text-align: center">
+
+        <div id="main-text">
+            Welcome to the acts of <b>Kindness day</b> randomizer.<br>
+            This instrument will help you to make someone's day better</div>
+        <img src="/pictures/background-01.png" style="width: 1830px; height: 990px;position: relative" />
+        <img src="/pictures/illustration-01.png" style="position: absolute;left:50px; margin-top: 0px; z-index: 2;"/>
+
+    </div>
+    <div style="position: absolute;z-index: 1">
+        <div class="image-cropper">
+            <img  style="position: absolute;z-index: 1;"class="rounded"  src=<%-picture_path%>  />
+        </div>
+    </div>
+
+    <div >
+        <div>
+            <div id="small-text">This time <span style="color: #2EB872;"><%-receiver%></span> will be lucky to receive a gift from you</b></div>
+            <img id="small-image" src="/pictures/Popup-01.png"  />
+        </div>
+    </div>
 </div>
+
+
+
+
+    <!--<div style="position: relative" class="container-fluid bg-1 text-center" >-->
+<!---->
+
+        <!--<img src=<%-picture_path%> alt="TEST" width="500px" height="500px">-->
+    <!--</div>-->
+
 </body>
 
 <script>
