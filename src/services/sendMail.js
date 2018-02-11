@@ -16,7 +16,7 @@ let sendMail = (ctx, user) => {
         }
 
         $ = cheerio.load(html.toString());
-        $('#link').attr('href', `${url}/receiver/` + user.uniqueId);
+        $('#link').attr('href', `${config.url}/receiver/` + user.uniqueId);
 
         let data = {
             to: user.email,

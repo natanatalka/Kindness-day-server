@@ -13,5 +13,5 @@ module.exports = {
     "mailPassword": process.env.EMAIL_PASS,
     "service": "Gmail",
     "secret": "natanatanata",
-    "url": process.env.URL
+    "url": "kindness.testing.softjourn.if.ua"
 };
