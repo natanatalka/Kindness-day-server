@@ -202,13 +202,15 @@ class UserController {
             receiver = await User.findOne({where: {id: receiverId}});
         }
         // const photoPath = path.dirname(require.main.filename);
-        console.log(getPhotoPath(receiver));
+         console.log(`${config.url}/${getPhotoPath(receiver)}`);
+
+        let pathPhoto = `${config.url}/api${getPhotoPath(receiver)}`;
 
         if (!receiver) {
             ctx.throw(404, 'There is no user with such receiver id')
         }
 
-        return await ctx.render('receiver/index', {receiver: receiver.name, picture_path: getPhotoPath(receiver)});
+            return await ctx.ok({receiver: receiver.name, path: pathPhoto});
 
     }
 }
