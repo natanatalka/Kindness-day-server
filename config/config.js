@@ -12,5 +12,6 @@ module.exports = {
     "mail":  process.env.EMAIL,
     "mailPassword": process.env.EMAIL_PASS,
     "service": "Gmail",
-    "secret": "natanatanata"
+    "secret": "natanatanata",
+    "url": process.env.URL
 };
