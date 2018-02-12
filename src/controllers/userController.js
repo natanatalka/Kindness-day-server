@@ -169,7 +169,11 @@ class UserController {
         const user = await User.findOne({where: {uniqueId: ctx.params.uniqueId}});
 
         if (!user) {
-            ctx.throw(404, 'User not found')
+            return  ctx.send(404, {message: 'User not found'})
+        }
+
+        if (user.isActive === 0) {
+            return  ctx.send(404,{message: 'User is inactive'});
         }
 
         if(user.receiverId) {
@@ -189,7 +193,7 @@ class UserController {
             const usersIds = availableIds.map(u => u.id);
 
             if (usersIds.length === 0) {
-                ctx.throw(400, 'No available users')
+                return  ctx.send(400, {message:'No available users' })
             }
 
             //if user doesn't have a receiver yet then set a random user from available users
@@ -201,13 +205,15 @@ class UserController {
 
             receiver = await User.findOne({where: {id: receiverId}});
         }
+        console.log(receiver);
         // const photoPath = path.dirname(require.main.filename);
-        console.log(`${config.url}/${getPhotoPath(receiver)}`);
-
-        let pathPhoto = `${config.url}/api${getPhotoPath(receiver)}`;
         if (!receiver) {
-            ctx.throw(404, 'There is no user with such receiver id')
+           return ctx.send(404, {message: 'There is no user with such receiver id'} )
         }
+        console.log(`${config.url}${getPhotoPath(receiver)}`);
+
+        let pathPhoto = `http://${config.url}${getPhotoPath(receiver)}`;
+
 
         return await ctx.ok({receiver: receiver.name, path: pathPhoto});
 
