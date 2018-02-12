@@ -9,7 +9,7 @@ const uuid = require('uuid/v4');
 const sendMail = require('../services/sendMail');
 const getPhotoPath = require('../services/getPhotoPath');
 const path = require('path');
-
+const config = require('../../config/config');
 class UserController {
 
     async upload(ctx) {
