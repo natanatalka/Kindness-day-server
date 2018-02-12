@@ -28,7 +28,7 @@ class LoginController {
     }
 
     async login(ctx) {
-        const errorMessage = 'Incorrect username of password';
+        const errorMessage = 'Incorrect username or password';
         let {Admin} = db;
         const body = ctx.request.body;
         const admin = await Admin.findOne({where: {username: body.username}});
