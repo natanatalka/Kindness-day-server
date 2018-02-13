@@ -20,7 +20,7 @@ let sendMail = (ctx, user) => {
         $('#link').attr('href', `http://${config.url}/receiver/${user.uniqueId}`);
 
         let data = {
-            from: 'Natalia',
+            from: '"Natalia Nykyforuk" <giftreceivernoreply@gmail.com>',
             to: user.email,
             subject: `Hello, ${user.name}!`,
             html: $.html()
